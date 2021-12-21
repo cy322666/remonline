@@ -24,7 +24,7 @@ class HookController extends Controller
 
         $lead = $amocrm->service
             ->leads()
-            ->find($request->toArray()['status'][0]['id']);
+            ->find($request->toArray()['leads']['status'][0]['id']);
 
         if($lead) {
 
@@ -56,9 +56,9 @@ class HookController extends Controller
                     $client = $remonline->service
                         ->clients()
                         ->create([
-                            'phone[]' => '79998887744',
-                            'email[]' => 'test@ya.ru',
-                            'name'    => 'test',
+                            'phone[]' => $model->phone,
+                            'email[]' => $model->email,
+                            'name'    => $model->name,
                         ]);
                 }
 
@@ -72,11 +72,10 @@ class HookController extends Controller
                         'brand'      => $model->brand,
                         'model'      => $model->model,
                         'client_id'  => $model->rm_client_id,
-                        'status_id'  => '',//TODO
                         'custom_fields' => json_encode([
                             '956779'  => $model->year_issue,//год выпуска
                             '1265785' => $model->date_entry,//date('d.m.Y'),//дата
-                            '2046049' => $model->services,//произведенные услуги
+                            '2046049' => $model->services,  //произведенные услуги
                         ]),
                     ]);
 
